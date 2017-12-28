@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  {% block title %}
+      <title>A Litte Aggregator</title>
+  {% endblock %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<style>
+table {
+  border: 1px solid red;
+  table-layout: fixed;
+}
+td {
+  border: 1px solid red;
+  overflow: hidden;
+  white-space: nowrap;
+}
+textarea {
+    resize: none;
+}
+</style>
+
+
+
+
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+
+
+      <div class="col-sm-2">
+      {% block sidebar %}
+
+      <div class="sidebar-nav">
+        <a href="{% url 'index' %}"><font size="10">&#127968;</font></a><br>
+        <a href="{% url 'hackernews' %}">Hackernews</a> <a href="{% url 'hackernews-search' %}">(search)</a>  <br>
+        <a href="{% url 'slashdot' %}">Slashdot</a> <a href="{% url 'slashdot-search' %}">(search)</a>  <br>
+        <a href="{% url 'reddit' %}">Reddit</a> <a href="{% url 'reddit-search' %}">(search)</a>  <br>
+        <a href="{% url 'chan' %}">Chan</a> <a href="{% url 'chan-search' %}">(search)</a>  <br>
+        <a href="{% url 'saved' %}"><font size="10">&#128161;</font></a> <br>
+        <a href="127.0.0.1:7777"">?</a> <br>
+      </div>
+      {% endblock %}
+      </div>
+
+
+      <div class="col-sm-10 ">
+      {% block content %}
+
+      {% endblock %}
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+
+
+</body>
+</html>

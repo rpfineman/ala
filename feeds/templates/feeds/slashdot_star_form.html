@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
+
+
+<form action="" method="post" name="star-form" novalidate>
+  {% csrf_token %}
+
+  <p>
+  {{ form.star }}
+  </p>
+
+
+  <p>
+  {{ form.referrer.as_hidden}}
+  </p>
+
+
+  <input type="submit" value="Submit" />
+</form>
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var e=document.getElementById("id_star");
+  e.click();
+  document.forms['star-form'].submit();
+</script>
+
+
+
+
+{% endblock %}
+

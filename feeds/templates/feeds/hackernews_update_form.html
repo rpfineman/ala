@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+<h1>hackernews_update_form.html</h1>
+
+<input type="textbox" value={{request.META.HTTP_REFERER}} style="width: 999px">
+
+<br>
+<br>
+<br>
+
+
+
+
+<form action="" method="post">
+  
+  {% csrf_token %}
+  
+  <p>
+  {{ form.referrer.as_hidden}}
+  </p>
+  
+  <p>
+  {{ form.star}}
+  </p>
+  
+  <font size="1">
+  <p>
+  {{ form.notes}}
+  </p>
+  </font >
+
+  <input type="submit" value="Submit" />
+</form>
+
+
+
+
+
+
+<script type="text/javascript">
+window.onload = function () {
+    if (! localStorage.justOnce) {
+        localStorage.setItem("justOnce", "true");
+        window.location.reload();
+    }
+}
+</script>
+
+
+
+{% endblock %}
+
+
+
+

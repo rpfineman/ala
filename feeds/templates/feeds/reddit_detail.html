@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+<h1>reddit_detail.html</h1>
+
+
+<div>id:&nbsp; {{reddit.id}}</div>
+<div>title:&nbsp; {{reddit.title}}</div>
+<div>url:&nbsp; {{reddit.url}}</div>
+<div>num_comments:&nbsp; {{reddit.num_comments}}</div>
+<div>date:&nbsp; {{reddit.date }}</div>
+<div>author:&nbsp; {{reddit.author}}</div>
+<div>reddit_update_form.html:&nbsp; <a href="{{reddit.get_absolute_url}}/update/">X</a></div>
+
+
+{% endblock %}
+
+

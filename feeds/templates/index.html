@@ -1,0 +1,341 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<style>
+table {
+  border: 1px solid white;
+  table-layout: fixed;
+  width:850px;
+}
+td {
+  border: 1px solid white;
+  overflow: hidden;
+  white-space: nowrap;
+}
+textarea {
+    resize: none;
+}
+</style>
+
+
+<h1> <b> home </b> </h1>
+
+
+<table >
+  <tr height="30px">
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td > </td>
+  </tr>
+
+  <tr height="22px">
+    <td colspan="4"></td>
+  </tr>
+
+
+
+
+
+  <tr height="30px">
+    <td align="left" colspan="4">
+      <font size="3">
+        hackernews
+      </font>
+    </td>
+  </tr>
+
+    <tr height="30px">
+      <td align="center" >
+        {% if h.star %}
+        <font color="#535354" size="3">
+          <span id={{h.id}} name={{h.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/h/'+{{h.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% else %}
+        <font color="#cccccc" size="3">
+        <span id={{h.id}} name={{h.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/h/'+{{h.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        {% if h.notes %}
+        <span id={{h.id}} name={{h.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/h/'+{{h.id}}+'/update';">
+          <font color="black" size="3">&#128215;</font>
+        </span>
+        {% else %}
+        <span id={{h.id}} name={{h.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/h/'+{{h.id}}+'/update';">
+            <font color="#b2b5ba" size="3">&#128215;</font>
+          </span>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        <font color="#999" size="1">{{h.num_comments}}</font>
+      </td>
+
+      <td align="left"  >
+        <font size="3">
+          <a href={{h.url}} target="_blank""> {{h.title|truncatechars:128}} </a>
+        </font>
+        <font color="#888" size="1">
+          {{h.author}} -- {{h.date}}
+        </font>
+
+
+      </td>
+
+
+    </tr>
+
+      {% if h.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color:
+                                                   rgb(240,240,130);
+                                                   height:100px; width:600px"
+                                                   >{{h.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+
+
+  <tr height="30px">
+    <td align="left" colspan="4">
+      <font size="3">
+        slashdot
+      </font>
+    </td>
+  </tr>
+
+    <tr height="30px">
+      <td align="center" >
+        {% if s.star %}
+        <font color="#535354" size="3">
+          <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{s.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% else %}
+        <font color="#cccccc" size="3">
+        <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{s.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        {% if s.notes %}
+        <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{s.id}}+'/update';">
+          <font color="black" size="3">&#128215;</font>
+        </span>
+        {% else %}
+        <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{s.id}}+'/update';">
+            <font color="#b2b5ba" size="3">&#128215;</font>
+          </span>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        <font color="#999" size="1">{{s.num_comments}}</font>
+      </td>
+
+      <td align="left"  >
+        <font size="3">
+          <a href="{{s.url}} target="_blank""> {{s.title|truncatechars:128}} </a>
+        </font>
+        <font color="#888" size="1">
+          {{s.author}} -- {{s.date}}
+        </font>
+      </td>
+
+    </tr>
+
+      {% if s.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color:
+                                                   rgb(240,240,130);
+                                                   height:100px; width:600px"
+                                                   >{{s.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+
+
+
+
+  <tr height="30px">
+    <td align="left" colspan="4">
+      <font size="3">
+        reddit
+      </font>
+    </td>
+  </tr>
+
+    <tr height="30px">
+      <td align="center" >
+        {% if r.star %}
+        <font color="#535354" size="3">
+        <span id={{r.id}} name={{r.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/r/'+{{r.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% else %}
+        <font color="#cccccc" size="3">
+        <span id={{r.id}} name={{r.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/r/'+{{r.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        {% if s.notes %}
+        <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/r/'+{{r.id}}+'/update';">
+          <font color="black" size="3">&#128215;</font>
+        </span>
+        {% else %}
+        <span id={{s.id}} name={{s.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/r/'+{{r.id}}+'/update';">
+            <font color="#b2b5ba" size="3">&#128215;</font>
+          </span>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        <font color="#999" size="1">{{r.num_comments}}</font>
+      </td>
+
+      <td align="left"  >
+        <font size="3">
+          <a href="{{r.url}} target="_blank""> {{r.title|truncatechars:128}} </a>
+        </font>
+        <font color="#888" size="1">
+          {{r.author}} -- {{r.date}}
+        </font>
+      </td>
+
+    </tr>
+
+      {% if r.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color:
+          rgb(240,240,130); height:100px; width:600px" >{{r.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+  <tr height="30px">
+    <td align="left" colspan="4">
+      <font size="3">
+        chan
+      </font>
+    </td>
+  </tr>
+
+    <tr height="30px">
+      <td align="center" >
+        {% if c.star %}
+        <font color="#535354" size="3">
+        <span id={{c.id}} name={{c.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{c.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% else %}
+        <font color="#cccccc" size="3">
+        <span id={{c.id}} name={{c.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{c.id}}+'/update-star';">&#9733;</span>
+        </font>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        {% if s.notes %}
+        <span id={{c.id}} name={{c.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{c.id}}+'/update';">
+          <font color="black" size="3">&#128215;</font>
+        </span>
+        {% else %}
+        <span id={{c.id}} name={{c.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{c.id}}+'/update';">
+            <font color="#b2b5ba" size="3">&#128215;</font>
+          </span>
+        {% endif %}
+      </td>
+
+      <td align="center">
+        <font color="#999" size="1"> {{c.num_comments}} </font>
+      </td>
+
+      <td align="left"  >
+        <font size="3">
+          <a href={{c.url}} target="_blank"> {{c.title|truncatechars:128}} </a>
+        </font>
+        <font color="#888" size="1">
+           -- {{c.date}}
+        </font>
+      </td>
+
+    </tr>
+
+      {% if c.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color: rgb(240,240,130); height:100px; width:600px" >{{c.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+
+
+
+
+
+</table>
+
+
+<!--
+ <br><br> <br><br> <br><br> <br><br> <br><br> <br><br>
+<iframe src="http://127.0.0.1:7777" style="height:750px; width:1050px;"  > </iframe>
+ <br><br> <br><br> <br><br> <br><br> <br><br> <br><br>
+-->
+
+
+
+
+<script type="text/javascript">
+window.onload = function () {
+  if (! localStorage.justOnce) {
+    localStorage.setItem("justOnce", "true");
+    window.location.reload();
+  };
+};
+</script>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+

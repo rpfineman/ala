@@ -1,0 +1,192 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+
+<style>
+table {
+  border: 1px solid white;
+  table-layout: fixed;
+  width:850px;
+}
+td {
+  border: 1px solid white;
+  overflow: hidden;
+  white-space: nowrap;
+}
+textarea {
+    resize: none;
+}
+
+</style>
+
+
+
+<h1> <b> chan-search </b> <sub> <small> {{ chan_list|length }} </small> </sub> </h1>
+
+
+<!-- generate form based off filter.py settings -->
+<form method="get">
+  <table >
+    <tr height="30px">
+      <td width="128" align="right"><b /> title:&nbsp;
+      <td >&nbsp;{{ filter.form.title}}</td>
+    </tr>
+
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> subject:&nbsp;
+      <td >&nbsp;{{ filter.form.subject}}</td>
+    </tr>
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> num_comments:&nbsp;
+      <td >&nbsp;gt: {{ filter.form.num_comments__gte}}&nbsp;&nbsp;&nbsp;lt: {{ filter.form.num_comments__lte}}</td>
+    </tr>
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> date:&nbsp;
+      <td >&nbsp;gt: {{ filter.form.date__gte}}&nbsp;&nbsp;&nbsp;lt: {{ filter.form.date__lte}}</td>
+    </tr>
+
+
+    <tr height="10px" />
+
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> notes:&nbsp;
+      <td >&nbsp;{{ filter.form.notes}}</td>
+    </tr>
+
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> star:&nbsp;
+      <td >&nbsp;{{ filter.form.star}}</td>
+    </tr>
+
+
+    <tr height="10px" />
+
+    <tr height="30px">
+      <td width="100px" align="right"><b /> ordering:&nbsp;
+      <td >&nbsp;{{ filter.form.o}}</td>
+    </tr>
+
+
+    <tr height="30px">
+      <td />
+      <td width="100px" align="left"><b /> <button type="submit">search</button>
+    </tr>
+
+
+
+  </table >
+
+
+
+</form>
+
+
+
+<table >
+  <tr height="30px">
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td width="6060px"> </td>
+  </tr>
+
+  {% for item in filter.qs %}
+
+  <tr height="30px">
+    <td align="center" >
+      {% if item.star %}
+      <font color="#535354" size="3">
+        <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{item.id}}+'/update-star';">&#9733;</span>
+      </font>
+      {% else %}
+      <font color="#cccccc" size="3">
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{item.id}}+'/update-star';">&#9733;</span>
+      </font>
+      {% endif %}
+    </td>
+
+    <td align="center">
+      {% if item.notes %}
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{item.id}}+'/update';">
+        <font color="black" size="3">&#128215;</font>
+      </span>
+      {% else %}
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/c/'+{{item.id}}+'/update';">
+          <font color="#b2b5ba" size="3">&#128215;</font>
+        </span>
+      {% endif %}
+    </td>
+
+    <td align="center">
+      <font color="#999" size="1">{{item.num_comments}}</font>
+    </td>
+
+    <td align="left" >
+      <font size="3">
+        <a href="{{item.url}}"> {{item.title|truncatechars:128}} </a>
+      </font>
+
+      <font color="#888" size="1">
+        -- {{item.date}}
+      </font>
+    </td>
+
+  </tr>
+
+
+
+
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <b>
+            <textarea disabled="disabled" wrap="off" style="font-family:Courier; background-color: rgb(210,220,220); height:100px; width:600px" >{{item.subject}}</textarea> </font>
+          </b>
+      </td>
+    </tr>
+
+    {% if item.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color: rgb(240,240,130); height:100px; width:600px" >{{item.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+
+
+  {% endfor %}
+
+
+</table>
+
+
+
+
+<script type="text/javascript">
+window.onload = function () {
+  if (! localStorage.justOnce) {
+    localStorage.setItem("justOnce", "true");
+    window.location.reload();
+  }
+};
+</script>
+
+
+{% endblock %}
+
+

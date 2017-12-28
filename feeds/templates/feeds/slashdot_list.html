@@ -1,0 +1,134 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<style>
+table {
+  border: 1px solid white;
+  table-layout: fixed;
+  width:850px;
+}
+td {
+  border: 1px solid white;
+  overflow: hidden;
+  white-space: nowrap;
+}
+textarea {
+    resize: none;
+}</style>
+
+
+<h1> <b> slashdot </b> <sub> <small> {{ slashdot_list|length }} </small> </sub> </h1>
+
+<table width="5150">
+  <tr height="30px">
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td width="30px"> </td>
+    <td width="6060px"> </td>
+  </tr>
+
+  <!-- We loop over groups of the same date, proper sorting is performed via Meta ording we specified in our Model -->
+  {% regroup slashdot_list by date as date_list %}
+  {% for date in date_list %}
+
+
+
+  <tr height="22px">
+    <td colspan="4"></td>
+  </tr>
+
+  <tr height="30px">
+    <td align="left" colspan="4">
+      <font size="3">
+            {{ date.grouper }}
+      </font>
+    </td>
+  </tr>
+
+  {% for item in date.list|slice:":10" %}
+
+  <tr height="30px">
+    <td align="center" >
+      {% if item.star %}
+      <font color="#535354" size="3">
+        <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{item.id}}+'/update-star';">&#9733;</span>
+      </font>
+      {% else %}
+      <font color="#cccccc" size="3">
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{item.id}}+'/update-star';">&#9733;</span>
+      </font>
+      {% endif %}
+    </td>
+
+    <td align="center">
+      {% if item.notes %}
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{item.id}}+'/update';">
+        <font color="black" size="3">&#128215;</font>
+      </span>
+      {% else %}
+      <span id={{item.id}} name={{item.id}} onclick="window.location.href = 'http://127.0.0.1:8000/feeds/s/'+{{item.id}}+'/update';">
+          <font color="#b2b5ba" size="3">&#128215;</font>
+        </span>
+      {% endif %}
+    </td>
+
+    <td align="center">
+      <font color="#999" size="1">{{item.num_comments}}</font>
+    </td>
+
+    <td align="left"  >
+      <font size="3">
+        <a href="{{item.url}}"> {{item.title|truncatechars:128}} </a>
+      </font>
+      <font color="#888" size="1">
+        {{item.author}}
+      </font>
+    </td>
+
+  </tr>
+
+    {% if item.notes %}
+    <tr height="30px">
+      <td colspan="3">
+      </td>
+      <td align="left">
+        <font size="1" color="grey">
+          <textarea disabled="disabled" wrap="off" style="background-color: rgb(240,240,130); height:100px; width:600px" >{{item.notes}}</textarea> </font>
+        </font>
+      </td>
+    </tr>
+    {% else %}
+    {% endif %}
+
+
+
+    {% endfor %}
+
+
+  {% endfor %}
+
+
+</table>
+
+
+
+
+<script type="text/javascript">
+window.onload = function () {
+  if (! localStorage.justOnce) {
+    localStorage.setItem("justOnce", "true");
+    window.location.reload();
+  }
+};
+</script>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

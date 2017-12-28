@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Testing Calculator</title>
+
+<style type="text/css">
+#display {
+    width: 180px;
+    border: 1px solid black;
+    padding: 5px 7px;
+    text-align: right;
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+input[type=button] {
+    font-size: 14px;
+    width: 40px;
+    margin: 3px;
+}
+</style>
+
+</head>
+<body>
+
+
+<div id="display"></div>
+
+<input type="button" id="clear" value="AC" />
+
+<br />
+
+<input type="button" id="number-7" value="7" />
+<input type="button" id="number-8" value="8" />
+<input type="button" id="number-9" value="9" />
+<input type="button" id="divide" value="/" />
+
+<br />
+
+<input type="button" id="number-4" value="4" />
+<input type="button" id="number-5" value="5" />
+<input type="button" id="number-6" value="6" />
+<input type="button" id="multiply" value="*" />
+
+<br />
+
+<input type="button" id="number-1" value="1" />
+<input type="button" id="number-2" value="2" />
+<input type="button" id="number-3" value="3" />
+<input type="button" id="subtract" value="-" />
+
+<br />
+
+<input type="button" id="number-0" value="0" />
+<input type="button" id="decimal" value="." />
+<input type="button" id="evaluate" value="=" />
+<input type="button" id="add" value="+" />
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    var display = $('#display'),
+        buttons = $('input[type=button]'),
+        state = 0, // this is the current value of the calculator
+        register = null, // this holds the temporary value the user is inputing
+        operator = null, // this holds the currently selected operator
+        operator_map;
+
+    // refresh the display (gets called after any input)
+    function paint_display() {
+        // if register is set, display it's value, else fall back to state
+        display.text(register || state);
+    }
+
+    // evaluate the current operator and update calculator state
+    function evaluate() {
+        // this function requires an operator and two operands, state and
+        // register (state is always set).
+        if (operator !== null && register !== null) {
+            state = operator(state, parseFloat(register));
+            register = null;
+            operator = null;
+        }
+    }
+
+    // clear all calculator state
+    function clear() {
+        state = 0;
+        register = null;
+        operator = null;
+    }
+
+    // store all operators in a map for easy lookup
+    operator_map = {
+        "/": function div(a, b) {
+            return a / b;
+        },
+        "*": function mult(a, b) {
+            return a * b;
+        },
+        "+": function add(a, b) {
+            return a + b;
+        },
+        "-": function sub(a, b) {
+            return a - b;
+        }
+    };
+
+    // handle user input (keypress and button clicks)
+    function handle_input(input) {
+        switch (input) {
+            case "0":
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+                // if register isn't set then set it to empty string
+                register = register || "";
+                // string concat the input at the end of the register
+                register = register + input;
+                break;
+            case ".":
+                // if register isn't set then set it to "0"
+                register = register || "0";
+                // add a '.' at the end of register if there isn't already one
+                register = register.indexOf('.') < 0 ? register + '.' : register;
+                break;
+            case "/":
+            case "*":
+            case "+":
+            case "-":
+                // evaluate previous operators so you can chain them w/o
+                // requiring user to hit =
+                evaluate();
+                // if there is still a value in register after evaluating then
+                // set it as the new state
+                if (register !== null) {
+                    state = parseFloat(register);
+                    register = null;
+                }
+                // set the new operator
+                operator = operator_map[input];
+                break;
+            case "=":
+                evaluate();
+                break;
+            case "AC":
+                clear();
+                break;
+        }
+
+        // finally refresh the display
+        paint_display();
+    }
+
+    // handler for the click event on any buttons
+    buttons.click(function (e) {
+        e.preventDefault();
+        handle_input(e.target.value);
+    });
+    // handler for keypress on body
+    $("body").keypress(function (e) {
+        var charCode = e.charCode || e.keyCode || e.which;
+        e.preventDefault();
+        switch (charCode) {
+            case 13:
+                // charCode 13 (return key) converts into "="
+                handle_input("=");
+                break;
+            default:
+                // all other keys get mapped directly to their string value
+                handle_input(String.fromCharCode(charCode));
+                break;
+        }
+    });
+
+    // after setup display the init state (0)
+    paint_display();
+});
+</script>
+
+</body>
+</html>
